@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, Text
+from sqlalchemy import Column, Integer, String,Float ,ForeignKey, DateTime, Boolean, Text
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -8,6 +8,7 @@ class SUBJECTS(Base):
     code = Column(String, primary_key=True, index=True)  # SUBCODE - Primary key
     name = Column(String, index=True)  # SUBNAME
     subtype = Column(String)  # SUBTYPE
+    credits = Column(Float)
     
     timetables = relationship("SCHEDULE", back_populates="subject")
 

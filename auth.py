@@ -17,26 +17,47 @@ security = HTTPBearer()
 
 def verify_password(plain_password, stored_password):
     """
-    Verify password. Handles both bcrypt hashed passwords and plain text passwords.
-    If stored_password looks like a bcrypt hash, use bcrypt verification.
-    Otherwise, do a plain text comparison (for backward compatibility).
+    Verify password. Handles both bcrypt hashed passwords, SHA256 hashes, and plain text passwords.
     """
-    # Check if stored_password is a bcrypt hash (starts with $2a$, $2b$, or $2y$)
-    if stored_password and stored_password.startswith('$2'):
+    if not plain_password or not stored_password:
+        return False
+        
+    # Check if stored_password is a bcrypt hash (starts with $2)
+    if stored_password.startswith('$2'):
         try:
-            return pwd_context.verify(plain_password, stored_password)
-        except Exception:
-            # If verification fails, fall back to plain text comparison
-            return plain_password == stored_password
-    else:
-        # Plain text password comparison
-        return plain_password == stored_password
+            import bcrypt
+            return bcrypt.checkpw(plain_password.encode('utf-8'), stored_password.encode('utf-8'))
+        except:
+            pass
+    
+    # Check if it's a SHA256 hash (64 hex characters)
+    elif len(stored_password) == 64 and all(c in '0123456789abcdefABCDEF' for c in stored_password):
+        import hashlib
+        return hashlib.sha256(plain_password.encode()).hexdigest() == stored_password
+    
+    # Plain text password comparison (for backward compatibility)
+    return plain_password == stored_password
 
 def get_password_hash(password):
-    # Truncate password to 72 characters max for bcrypt compatibility
+    # Ensure password is a string and truncate to 72 characters max for bcrypt compatibility
+    if not isinstance(password, str):
+        password = str(password)
     if len(password) > 72:
         password = password[:72]
-    return pwd_context.hash(password)
+    try:
+        # Try using bcrypt directly
+        import bcrypt
+        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    except Exception as e:
+        print(f"Error with bcrypt: {e}")
+        try:
+            # Fallback to passlib
+            return pwd_context.hash(password)
+        except Exception as e2:
+            print(f"Error with passlib: {e2}")
+            # Final fallback - simple hash
+            import hashlib
+            return hashlib.sha256(password.encode()).hexdigest()
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()

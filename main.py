@@ -8,7 +8,7 @@ import models
 import schemas
 from database import get_db, engine
 from schedule_generator import ScheduleGenerator
-from auth import authenticate_admin, create_access_token, get_current_admin, timedelta, verify_password
+from auth import authenticate_admin, create_access_token, get_current_admin, timedelta, verify_password, get_password_hash
 from pydantic import BaseModel
 
 # Create database tables
@@ -111,6 +111,60 @@ def get_subjects(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
     subjects = db.query(models.SUBJECTS).offset(skip).limit(limit).all()
     return subjects
 
+@app.get("/subjects/periods-info")
+def get_all_subjects_periods_info(db: Session = Depends(get_db)):
+    """Get periods needed info for all subjects"""
+    try:
+        generator = ScheduleGenerator(db)
+        subjects = db.query(models.SUBJECTS).all()
+        
+        periods_info = []
+        for subject in subjects:
+            try:
+                periods_needed = generator.calculate_periods_needed(subject.code)
+                periods_info.append({
+                    "code": subject.code,
+                    "name": subject.name,
+                    "subtype": subject.subtype,
+                    "credits": subject.credits,
+                    "periods_needed": periods_needed
+                })
+            except ValueError as e:
+                periods_info.append({
+                    "code": subject.code,
+                    "name": subject.name,
+                    "subtype": subject.subtype,
+                    "credits": subject.credits,
+                    "periods_needed": None,
+                    "error": str(e)
+                })
+            except Exception as e:
+                periods_info.append({
+                    "code": subject.code,
+                    "name": subject.name,
+                    "subtype": subject.subtype,
+                    "credits": subject.credits,
+                    "periods_needed": None,
+                    "error": f"Unexpected error: {str(e)}"
+                })
+        
+        return periods_info
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+@app.get("/subjects/{subcode}/periods-needed")
+def get_periods_needed(subcode: str, db: Session = Depends(get_db)):
+    """Get the number of periods needed per week for a subject based on credits"""
+    generator = ScheduleGenerator(db)
+    try:
+        periods_needed = generator.calculate_periods_needed(subcode)
+        return {
+            "subcode": subcode,
+            "periods_needed": periods_needed
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
 @app.get("/subjects/{subject_code}", response_model=schemas.Subjects)
 def get_subject(subject_code: str, db: Session = Depends(get_db)):
     subject = db.query(models.SUBJECTS).filter(models.SUBJECTS.code == subject_code).first()
@@ -144,7 +198,10 @@ def delete_subject(subject_code: str, db: Session = Depends(get_db), current_use
 # FACULTY endpoints
 @app.post("/faculty/", response_model=schemas.Faculty)
 def create_faculty(faculty: schemas.FacultyCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_admin)):
-    db_faculty = models.FACULTY(**faculty.dict())
+    # Hash the password before storing
+    faculty_data = faculty.dict()
+    faculty_data['password'] = get_password_hash(faculty_data['password'])
+    db_faculty = models.FACULTY(**faculty_data)
     db.add(db_faculty)
     db.commit()
     db.refresh(db_faculty)
@@ -168,7 +225,12 @@ def update_faculty(faculty_id: int, faculty: schemas.FacultyCreate, db: Session 
     if not db_faculty:
         raise HTTPException(status_code=404, detail="Faculty not found")
     
-    for key, value in faculty.dict().items():
+    # Hash password if it's being updated
+    faculty_data = faculty.dict()
+    if 'password' in faculty_data and faculty_data['password']:
+        faculty_data['password'] = get_password_hash(faculty_data['password'])
+    
+    for key, value in faculty_data.items():
         setattr(db_faculty, key, value)
     
     db.commit()
@@ -188,7 +250,10 @@ def delete_faculty(faculty_id: int, db: Session = Depends(get_db), current_user:
 # STUDENT endpoints
 @app.post("/students/", response_model=schemas.Student)
 def create_student(student: schemas.StudentCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_admin)):
-    db_student = models.STUDENT(**student.dict())
+    # Hash the password before storing
+    student_data = student.dict()
+    student_data['password'] = get_password_hash(student_data['password'])
+    db_student = models.STUDENT(**student_data)
     db.add(db_student)
     db.commit()
     db.refresh(db_student)
@@ -212,7 +277,12 @@ def update_student(student_id: str, student: schemas.StudentCreate, db: Session 
     if not db_student:
         raise HTTPException(status_code=404, detail="Student not found")
     
-    for key, value in student.dict().items():
+    # Hash password if it's being updated
+    student_data = student.dict()
+    if 'password' in student_data and student_data['password']:
+        student_data['password'] = get_password_hash(student_data['password'])
+    
+    for key, value in student_data.items():
         setattr(db_student, key, value)
     
     db.commit()
@@ -362,4 +432,4 @@ def get_faculty_timetable(fini: str, db: Session = Depends(get_db)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    uvicorn.run(app, host="127.0.0.1", port=8000)

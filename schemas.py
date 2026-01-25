@@ -6,6 +6,7 @@ class SubjectsBase(BaseModel):
     code: str
     name: str
     subtype: str
+    credits: float
 
 class SubjectsCreate(SubjectsBase):
     pass
