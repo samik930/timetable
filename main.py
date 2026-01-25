@@ -8,6 +8,7 @@ import models
 import schemas
 from database import get_db, engine
 from schedule_generator import ScheduleGenerator
+from credit_validator import CreditValidator
 from auth import authenticate_admin, create_access_token, get_current_admin, timedelta, verify_password, get_password_hash
 from pydantic import BaseModel
 
@@ -110,60 +111,6 @@ def create_subject(subject: schemas.SubjectsCreate, db: Session = Depends(get_db
 def get_subjects(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     subjects = db.query(models.SUBJECTS).offset(skip).limit(limit).all()
     return subjects
-
-@app.get("/subjects/periods-info")
-def get_all_subjects_periods_info(db: Session = Depends(get_db)):
-    """Get periods needed info for all subjects"""
-    try:
-        generator = ScheduleGenerator(db)
-        subjects = db.query(models.SUBJECTS).all()
-        
-        periods_info = []
-        for subject in subjects:
-            try:
-                periods_needed = generator.calculate_periods_needed(subject.code)
-                periods_info.append({
-                    "code": subject.code,
-                    "name": subject.name,
-                    "subtype": subject.subtype,
-                    "credits": subject.credits,
-                    "periods_needed": periods_needed
-                })
-            except ValueError as e:
-                periods_info.append({
-                    "code": subject.code,
-                    "name": subject.name,
-                    "subtype": subject.subtype,
-                    "credits": subject.credits,
-                    "periods_needed": None,
-                    "error": str(e)
-                })
-            except Exception as e:
-                periods_info.append({
-                    "code": subject.code,
-                    "name": subject.name,
-                    "subtype": subject.subtype,
-                    "credits": subject.credits,
-                    "periods_needed": None,
-                    "error": f"Unexpected error: {str(e)}"
-                })
-        
-        return periods_info
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-
-@app.get("/subjects/{subcode}/periods-needed")
-def get_periods_needed(subcode: str, db: Session = Depends(get_db)):
-    """Get the number of periods needed per week for a subject based on credits"""
-    generator = ScheduleGenerator(db)
-    try:
-        periods_needed = generator.calculate_periods_needed(subcode)
-        return {
-            "subcode": subcode,
-            "periods_needed": periods_needed
-        }
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
 
 @app.get("/subjects/{subject_code}", response_model=schemas.Subjects)
 def get_subject(subject_code: str, db: Session = Depends(get_db)):
@@ -302,6 +249,21 @@ def delete_student(student_id: str, db: Session = Depends(get_db), current_user:
 # SCHEDULE endpoints
 @app.post("/schedule/", response_model=schemas.Schedule)
 def create_schedule_entry(schedule: schemas.ScheduleCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_admin)):
+    """Create a schedule entry with credit validation"""
+    validator = CreditValidator(db)
+    
+    # Validate the schedule entry first
+    validation_result = validator.validate_schedule_entry(
+        schedule.subcode, 
+        schedule.section, 
+        schedule.day_id, 
+        schedule.period_id
+    )
+    
+    if not validation_result["valid"]:
+        raise HTTPException(status_code=400, detail=validation_result["message"])
+    
+    # If validation passes, create the entry
     generator = ScheduleGenerator(db)
     
     try:

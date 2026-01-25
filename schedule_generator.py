@@ -6,28 +6,6 @@ import uuid
 class ScheduleGenerator:
     def __init__(self, db: Session):
         self.db = db
-    
-    def calculate_periods_needed(self, subcode: str) -> int:
-        """Calculate number of periods needed per week based on subject credits and type"""
-        subject = self.db.query(SUBJECTS).filter(SUBJECTS.code == subcode).first()
-        if not subject:
-            raise ValueError(f"Subject with code {subcode} not found")
-        
-        if not subject.credits:
-            raise ValueError(f"Subject {subcode} has no credits defined")
-        
-        # For theory subjects ('T'): credits = number of classes per week
-        if subject.subtype.upper() == 'T':
-            return int(subject.credits)
-        
-        # For lab subjects ('L'/'P'): classes per week = 2 × credits
-        elif subject.subtype.upper() in ['L', 'P']:
-            periods_needed = int(2 * subject.credits)
-            return periods_needed
-        
-        else:
-            # Default to credits if subject type is unknown
-            return int(subject.credits)
         
     def create_schedule_entry(self, day_id: int, period_id: int, subcode: str, section: str, fini: str) -> SCHEDULE:
         """Create a single schedule entry"""

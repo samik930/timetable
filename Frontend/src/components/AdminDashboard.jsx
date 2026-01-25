@@ -174,6 +174,7 @@ const AdminDashboard = () => {
             <th>Code</th>
             <th>Name</th>
             <th>Subtype</th>
+            <th>Credits</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -183,6 +184,7 @@ const AdminDashboard = () => {
               <td>{subject.code}</td>
               <td>{subject.name}</td>
               <td>{subject.subtype}</td>
+              <td>{subject.credits}</td>
               <td>
                 <button onClick={() => handleEdit(subject)} className="btn-edit">Edit</button>
                 <button onClick={() => handleDelete(subject)} className="btn-delete">Delete</button>
@@ -199,7 +201,6 @@ const AdminDashboard = () => {
       <table className="admin-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Initials</th>
             <th>Email</th>
@@ -211,7 +212,6 @@ const AdminDashboard = () => {
         <tbody>
           {faculty.map((fac) => (
             <tr key={fac.id}>
-              <td>{fac.id}</td>
               <td>{fac.name}</td>
               <td>{fac.initials}</td>
               <td>{fac.email}</td>
@@ -292,6 +292,18 @@ const AdminDashboard = () => {
               <option value="T">Theory (T)</option>
               <option value="P">Practical (P)</option>
             </select>
+          </div>
+          <div className="form-group">
+            <label>Credits *</label>
+            <input
+              type="number"
+              step="0.5"
+              min="0.5"
+              value={formData.credits || ''}
+              onChange={(e) => setFormData({ ...formData, credits: parseFloat(e.target.value) })}
+              required
+              placeholder="e.g., 4.0 for theory, 1.5 for lab"
+            />
           </div>
           <div className="form-actions">
             <button type="submit" className="btn-save">Save</button>
