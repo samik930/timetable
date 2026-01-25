@@ -1,0 +1,449 @@
+.admin-panel {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.admin-tabs {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 15px 20px;
+  border: none;
+  background: transparent;
+  font-size: 1em;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+  background: #e9ecef;
+  color: #333;
+}
+
+.tab-button.active {
+  background: white;
+  color: #667eea;
+  border-bottom-color: #667eea;
+  font-weight: 600;
+}
+
+.admin-content {
+  padding: 30px;
+}
+
+.admin-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-list-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5em;
+}
+
+.btn-add {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.admin-table-container {
+  overflow-x: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.admin-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.admin-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.admin-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.admin-table td {
+  padding: 12px 15px;
+  color: #333;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 6px 12px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-edit {
+  background: #28a745;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.admin-form-container {
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.admin-form {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.admin-form h3 {
+  margin: 0 0 25px 0;
+  color: #333;
+  font-size: 1.5em;
+}
+
+.admin-form .form-group {
+  margin-bottom: 20px;
+}
+
+.admin-form .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.admin-form .form-group input,
+.admin-form .form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+}
+
+.admin-form .form-group input:focus,
+.admin-form .form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.admin-form .form-group input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.btn-save {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-cancel {
+  padding: 12px 24px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background: #5a6268;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 1.1em;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+}
+
+/* Schedule Timetable Styles */
+.schedule-container {
+  width: 100%;
+}
+
+.schedule-header {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-selector label {
+  font-weight: 500;
+  color: #333;
+}
+
+.section-select {
+  padding: 10px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1em;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.section-select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.cell-edit-form {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 2px solid #667eea;
+}
+
+.cell-edit-form h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.timetable-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  min-width: 800px;
+}
+
+.timetable-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.timetable-table th {
+  padding: 15px;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.timetable-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.timetable-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.day-cell {
+  padding: 15px;
+  font-weight: 600;
+  color: #333;
+  background: #f8f9fa;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  min-width: 120px;
+}
+
+.period-cell {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  min-width: 150px;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  position: relative;
+}
+
+.period-cell:hover {
+  background: #f0f0f0;
+}
+
+.period-cell.editing {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+}
+
+.schedule-entry {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.schedule-entry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.schedule-entry .subject-name {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95em;
+  margin-bottom: 4px;
+}
+
+.schedule-entry .subject-code {
+  color: #667eea;
+  font-size: 0.85em;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.schedule-entry .teacher-name {
+  color: #666;
+  font-size: 0.8em;
+  margin-top: 4px;
+}
+
+.schedule-entry .click-hint {
+  color: #999;
+  font-size: 0.75em;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.empty-cell {
+  color: #ccc;
+  font-style: italic;
+  padding: 20px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.empty-cell:hover {
+  color: #667eea;
+  border-color: #667eea;
+  background: #f8f9ff;
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    padding: 15px;
+  }
+
+  .admin-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .admin-table-container {
+    overflow-x: scroll;
+  }
+
+  .admin-form {
+    padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .timetable-table-wrapper {
+    overflow-x: scroll;
+  }
+}
+
