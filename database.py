@@ -11,7 +11,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
     # Fallback to local PostgreSQL for development
-    DATABASE_URL = "postgresql://postgres:Samik19@localhost:5432/timetable_db"
+    DATABASE_URL = "postgresql://timetable_user:Samik19@localhost:5432/timetable_db"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
