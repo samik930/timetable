@@ -14,7 +14,7 @@ A comprehensive timetabling system for educational institutions that automatical
 ## Tech Stack
 
 - **Backend**: Python FastAPI
-- **Database**: PostgreSQL with SQLAlchemy ORM
+- **Database**: SQLite with SQLAlchemy ORM
 - **Authentication**: JWT tokens with bcrypt
 - **PDF Generation**: ReportLab
 - **API Documentation**: Swagger/OpenAPI
@@ -27,14 +27,19 @@ A comprehensive timetabling system for educational institutions that automatical
    pip install -r requirements.txt
    ```
 
-3. Set up PostgreSQL database and update `.env` file:
+3. Set up SQLite database and update `.env` file:
    ```env
-   DATABASE_URL=postgresql://username:password@localhost:5432/timetable_db
+   DATABASE_URL=sqlite:///./timetable.db
    SECRET_KEY=your-secret-key-here
    DEBUG=True
    ```
 
-4. Run the application:
+4. (Optional) Migrate from PostgreSQL to SQLite:
+   ```bash
+   python migrate_to_sqlite.py
+   ```
+
+5. Run the application:
    ```bash
    uvicorn main:app --reload
    ```
