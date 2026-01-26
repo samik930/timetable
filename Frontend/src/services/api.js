@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://timetable-api-76dg.onrender.com';
+const API_BASE_URL = 'http://localhost:8000';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -25,10 +25,6 @@ api.interceptors.request.use(
 
 export const authAPI = {
   login: async (username, password, userType) => {
-    console.log('API_BASE_URL:', API_BASE_URL);
-    console.log('Making login request to:', `${API_BASE_URL}/auth/login`);
-    console.log('Login data:', { username, password, user_type: userType });
-    
     const response = await api.post('/auth/login', {
       username,
       password,
