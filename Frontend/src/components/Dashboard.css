@@ -50,6 +50,44 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.timetable-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.timetable-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5em;
+}
+
+.download-pdf-btn {
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-pdf-btn:hover:not(:disabled) {
+  background: #218838;
+}
+
+.download-pdf-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .timetable-container h2 {
   margin: 0 0 20px 0;
   color: #333;

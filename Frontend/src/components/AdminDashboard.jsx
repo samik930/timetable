@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { adminAPI } from '../services/api';
+import AutomatedTimetableGenerator from './AutomatedTimetableGenerator';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -517,7 +518,7 @@ const AdminDashboard = () => {
   };
 
   const renderScheduleTimetable = () => {
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const maxPeriods = 8;
     
     // Create a 2D grid
@@ -726,6 +727,12 @@ const AdminDashboard = () => {
           >
             Schedule Timetable
           </button>
+          <button
+            className={`tab-button ${activeTab === 'automated' ? 'active' : ''}`}
+            onClick={() => { setActiveTab('automated'); setShowForm(false); }}
+          >
+            Automated Generator
+          </button>
         </div>
 
         {error && <div className="error-message">{error}</div>}
@@ -737,7 +744,7 @@ const AdminDashboard = () => {
             </div>
           ) : (
             <div className="admin-list-container">
-              {activeTab !== 'schedule' && (
+              {activeTab !== 'schedule' && activeTab !== 'automated' && (
                 <div className="admin-list-header">
                   <h2>
                     {activeTab === 'subjects' ? 'Subjects' : activeTab === 'faculty' ? 'Faculty' : 'Students'}
@@ -774,6 +781,9 @@ const AdminDashboard = () => {
                         ) : (
                           renderStudentsTable()
                         )
+                      )}
+                      {activeTab === 'automated' && (
+                        <AutomatedTimetableGenerator />
                       )}
                     </>
                   )}

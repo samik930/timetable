@@ -128,6 +128,24 @@ export const adminAPI = {
     const response = await api.get('/faculty/');
     return response.data;
   },
+  
+  // Automated Timetable Generation
+  getAutomatedSubjects: async () => {
+    const response = await api.get('/automated/subjects');
+    return response.data;
+  },
+  getAutomatedFaculty: async () => {
+    const response = await api.get('/automated/faculty');
+    return response.data;
+  },
+  generateAutomatedTimetable: async (assignments) => {
+    const response = await api.post('/automated/generate', assignments);
+    return response.data;
+  },
+  previewSectionTimetable: async (section) => {
+    const response = await api.get(`/automated/preview/${section}`);
+    return response.data;
+  },
 };
 
 export default api;

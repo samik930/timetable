@@ -9,6 +9,7 @@ import schemas
 from database import get_db, engine
 from schedule_generator import ScheduleGenerator
 from credit_validator import CreditValidator
+from automated_timetable_generator import AutomatedTimetableGenerator
 from auth import authenticate_admin, create_access_token, get_current_admin, timedelta, verify_password, get_password_hash
 from pydantic import BaseModel
 
@@ -37,6 +38,15 @@ class Token(BaseModel):
     token_type: str
     user_type: str
     user_info: dict
+
+# Automated Timetable Generation schemas
+class SubjectFacultyAssignment(BaseModel):
+    section: str
+    subject_code: str
+    faculty_initials: str
+
+class AutomatedTimetableRequest(BaseModel):
+    assignments: List[SubjectFacultyAssignment]
 
 # Authentication endpoints
 @app.post("/auth/login", response_model=Token)
@@ -389,6 +399,53 @@ def get_faculty_timetable(fini: str, db: Session = Depends(get_db)):
     
     return {
         "faculty_initials": fini,
+        "schedule": schedule
+    }
+
+# Automated Timetable Generation endpoints
+@app.get("/automated/subjects")
+def get_available_subjects(db: Session = Depends(get_db)):
+    """Get all available subjects for automated timetable generation"""
+    generator = AutomatedTimetableGenerator(db)
+    subjects = generator.get_available_subjects()
+    return {"subjects": subjects}
+
+@app.get("/automated/faculty")
+def get_available_faculty(db: Session = Depends(get_db)):
+    """Get all available faculty for automated timetable generation"""
+    generator = AutomatedTimetableGenerator(db)
+    faculty = generator.get_available_faculty()
+    return {"faculty": faculty}
+
+@app.post("/automated/generate")
+def generate_automated_timetable(request: AutomatedTimetableRequest, db: Session = Depends(get_db), current_user: str = Depends(get_current_admin)):
+    """Generate automated timetable for all sections based on subject-faculty assignments"""
+    
+    # Convert assignments to the format expected by the generator
+    subject_faculty_assignments = {}
+    for assignment in request.assignments:
+        section = assignment.section.upper()
+        if section not in subject_faculty_assignments:
+            subject_faculty_assignments[section] = {}
+        subject_faculty_assignments[section][assignment.subject_code] = assignment.faculty_initials
+    
+    # Generate timetable
+    generator = AutomatedTimetableGenerator(db)
+    results = generator.generate_automated_timetable(subject_faculty_assignments)
+    
+    return {
+        "message": "Automated timetable generation completed",
+        "results": results
+    }
+
+@app.get("/automated/preview/{section}")
+def preview_section_timetable(section: str, db: Session = Depends(get_db)):
+    """Preview the generated timetable for a specific section"""
+    generator = ScheduleGenerator(db)
+    schedule = generator.get_schedule_by_section(section)
+    
+    return {
+        "section": section,
         "schedule": schedule
     }
 
