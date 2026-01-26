@@ -25,6 +25,10 @@ api.interceptors.request.use(
 
 export const authAPI = {
   login: async (username, password, userType) => {
+    console.log('API_BASE_URL:', API_BASE_URL);
+    console.log('Making login request to:', `${API_BASE_URL}/auth/login`);
+    console.log('Login data:', { username, password, user_type: userType });
+    
     const response = await api.post('/auth/login', {
       username,
       password,
