@@ -6,11 +6,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Use SQLite for Render deployment, PostgreSQL for local development
+# Get database URL from environment or use local PostgreSQL
 DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL or DATABASE_URL.startswith("postgresql://localhost"):
-    # Use SQLite for Render or when DATABASE_URL is not set
-    DATABASE_URL = "sqlite:///./timetable.db"
+
+if not DATABASE_URL:
+    # Fallback to local PostgreSQL for development
+    DATABASE_URL = "postgresql://postgres:Samik19@localhost:5432/timetable_db"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
