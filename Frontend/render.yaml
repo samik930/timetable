@@ -1,5 +1,5 @@
 services:
-  - type: web
+  - type: static
     name: timetable-frontend
     env: static
     buildCommand: npm run build
