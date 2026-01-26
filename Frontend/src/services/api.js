@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://timetable-api.onrender.com';
+const API_BASE_URL = 'https://timetable-api-76dg.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
