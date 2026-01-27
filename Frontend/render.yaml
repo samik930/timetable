@@ -1,0 +1,9 @@
+services:
+  - type: static
+    name: timetable-frontend
+    env: static
+    buildCommand: npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://timetable-5.onrender.com

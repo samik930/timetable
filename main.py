@@ -18,6 +18,15 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Timetable Creator API", version="1.0.0")
 
+@app.get("/")
+def read_root():
+    return {
+        "message": "Timetable Creator API",
+        "version": "1.0.0",
+        "docs": "/docs",
+        "status": "running"
+    }
+
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
