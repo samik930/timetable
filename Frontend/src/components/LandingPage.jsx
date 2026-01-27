@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="landing-page">
       {/* Header */}
@@ -12,10 +15,10 @@ const LandingPage = () => {
             <p>Smart Scheduling Solution</p>
           </div>
           <nav className="nav-menu">
-            <a href="#home" className="nav-link">Home</a>
-            <a href="#features" className="nav-link">Features</a>
-            <a href="#about" className="nav-link">About</a>
-            <a href="#contact" className="nav-link">Contact</a>
+            <a href="#home" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' }); }}>Home</a>
+            <a href="#features" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }}>Features</a>
+            <a href="#about" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }}>About</a>
+            <a href="#contact" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Contact</a>
           </nav>
         </div>
       </header>
@@ -32,19 +35,19 @@ const LandingPage = () => {
             <div className="login-options">
               <h2>Choose Your Login</h2>
               <div className="login-cards">
-                <div className="login-card student-card" onClick={() => window.location.href = '/login?userType=student'}>
+                <div className="login-card student-card" onClick={() => navigate('/login?userType=student')}>
                   <div className="card-icon">👨‍🎓</div>
                   <h3>Student</h3>
                   <p>View your class schedule and manage your academic timetable</p>
                   <button className="card-btn">Student Login</button>
                 </div>
-                <div className="login-card faculty-card" onClick={() => window.location.href = '/login?userType=faculty'}>
+                <div className="login-card faculty-card" onClick={() => navigate('/login?userType=faculty')}>
                   <div className="card-icon">👨‍🏫</div>
                   <h3>Faculty</h3>
                   <p>Manage your teaching schedule and view class assignments</p>
                   <button className="card-btn">Faculty Login</button>
                 </div>
-                <div className="login-card admin-card" onClick={() => window.location.href = '/login?userType=admin'}>
+                <div className="login-card admin-card" onClick={() => navigate('/login?userType=admin')}>
                   <div className="card-icon">⚙️</div>
                   <h3>Administrator</h3>
                   <p>Full system control and timetable management</p>
@@ -147,10 +150,10 @@ const LandingPage = () => {
             <div className="footer-section">
               <h4>Quick Links</h4>
               <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" onClick={(e) => { e.preventDefault(); document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' }); }}>Home</a></li>
+                <li><a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }}>Features</a></li>
+                <li><a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }}>About</a></li>
+                <li><a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Contact</a></li>
               </ul>
             </div>
             <div className="footer-section">
