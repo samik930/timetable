@@ -1,0 +1,696 @@
+{
+  "subjects": [
+    {
+      "code": "CSE2101",
+      "name": "DATA STRUCTURES & ALGORITHMS",
+      "subtype": "T",
+      "credits": 4.0
+    },
+    {
+      "code": "CSE2102",
+      "name": "OPERATING SYSTEMS",
+      "subtype": "T",
+      "credits": 3.0
+    },
+    {
+      "code": "ECE2004",
+      "name": "DIGITAL ELECTRONICS",
+      "subtype": "T",
+      "credits": 3.0
+    },
+    {
+      "code": "MTH2101",
+      "name": "DISCRETE MATHEMATICS",
+      "subtype": "T",
+      "credits": 4.0
+    },
+    {
+      "code": "MTH2102",
+      "name": "PROBABILITY & STATISTICS",
+      "subtype": "T",
+      "credits": 4.0
+    },
+    {
+      "code": "CSE2151",
+      "name": "DATA STRUCTURES & ALGORITHMS LAB",
+      "subtype": "P",
+      "credits": 1.5
+    },
+    {
+      "code": "CSE2152",
+      "name": "OPERATING SYSTEMS LAB",
+      "subtype": "P",
+      "credits": 1.5
+    },
+    {
+      "code": "ECE2054",
+      "name": "DIGITAL ELECTRONICS LAB",
+      "subtype": "P",
+      "credits": 1.0
+    },
+    {
+      "code": "CSE2053",
+      "name": "Software Tools Lab",
+      "subtype": "P",
+      "credits": 1.0
+    },
+    {
+      "code": "CSE2104",
+      "name": "COMPUTER ORGANIZATION AND ARCHITECURE",
+      "subtype": "T",
+      "credits": 4.0
+    }
+  ],
+  "faculty": [
+    {
+      "id": 13,
+      "password": "$2b$12$REnUYF3wgcNNCc.QDjRtreVZoYbwiy7A.mF7SX.pheyyGWqNA5.GS",
+      "name": "Arindam Chatterjee",
+      "initials": "AC",
+      "email": "ac@hitk.in",
+      "subcode1": "CSE2102",
+      "subcode2": "CSE2152",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 14,
+      "password": "$2b$12$Jtef7eDlXUeA4zErmaWaAuoP.ext883oMonjtgeumNmdMFQs4xpA.",
+      "name": "Mousiki Kar",
+      "initials": "MK",
+      "email": "mousikikar@hitk.in",
+      "subcode1": "ECE2004",
+      "subcode2": "ECE2054",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 15,
+      "password": "$2b$12$1r.tpyabNN4TlauXWNFKCOXmyTiD2FoVx1TsaGqyxLQg6Ex.5VFou",
+      "name": "Somjit Dutta",
+      "initials": "SD",
+      "email": "somjitdutta@hitk.in",
+      "subcode1": "MTH2101",
+      "subcode2": "NIL",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 16,
+      "password": "$2b$12$cgZMByTu.vo9b41EZwvIyucmYm/aRYOU9Ga7DfMVc3zVVoDCVlvuC",
+      "name": "Ritwick Banerjee",
+      "initials": "RB",
+      "email": "rb@hitk.in",
+      "subcode1": "MTH2102",
+      "subcode2": "NIL",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 18,
+      "password": "$2b$12$YD55XIIWw2zCZdlk9wUKz.OOrifvmDpr.AECMzpYD7nIjNwR4PzxC",
+      "name": "Somnath Saha",
+      "initials": "SS",
+      "email": "sms@hitk.in",
+      "subcode1": "CSE2101",
+      "subcode2": "CSE2053",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 12,
+      "password": "$2b$12$kyChUO6E1IQe6SrYVlZ4ce.BVfPkInIcheWVPrIXfhuma6zMDJuU6",
+      "name": "Subhashis Majumdar",
+      "initials": "SM",
+      "email": "sm@hitk.in",
+      "subcode1": "CSE2101",
+      "subcode2": "CSE2151",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 17,
+      "password": "$2b$12$DsQTHSS2HuJFG6uZnCVkyO7h36TeCVJzUGU5QXbZ1TIB.RabhGJkC",
+      "name": "Somak Sen",
+      "initials": "SSN",
+      "email": "ss@hitk.in",
+      "subcode1": "CSE2053",
+      "subcode2": "NIL",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 19,
+      "password": "$2b$12$754W04QXXTvegwuoepdWsOlWB212X.x.SzvhmEwWHp6VaUJys/Vqy",
+      "name": "Anurina Tarafdar",
+      "initials": "ART",
+      "email": "art@gmail.com",
+      "subcode1": "CSE2101",
+      "subcode2": "CSE2151",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 20,
+      "password": "$2b$12$F.saJH1ABc6wga7WSR0ml.29zojevrLosuRzmfYlIPlxz4sBljiMS",
+      "name": "Nilanjana Basu",
+      "initials": "NB",
+      "email": "nilanjanabasu@hitk.in",
+      "subcode1": "CSE2102",
+      "subcode2": "CSE2152",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 21,
+      "password": "$2b$12$zVEFQlDm.PsCDISd2qd2r.8wIzhinl73HzyONFe78xnvKGITy3TnG",
+      "name": "Diganta Bose",
+      "initials": "DB",
+      "email": "db@hitk.in",
+      "subcode1": "CSE2102",
+      "subcode2": "CSE2152",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 22,
+      "password": "$2b$12$H.RrDsqI822258WoHEUZN.WTV9oFciR/6F7s44swq50b9UOEsiwum",
+      "name": "Moumita Bera",
+      "initials": "MB",
+      "email": "mb@hitk.in",
+      "subcode1": "MTH2102",
+      "subcode2": "NIL",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 23,
+      "password": "$2b$12$odoh0d2UimbYk54VObt.aeC.1xZ5xaGsJJXLVmWl3vwESVg84lnLC",
+      "name": "Venu Bihani",
+      "initials": "VB",
+      "email": "vb@hitk.in",
+      "subcode1": "MTH2101",
+      "subcode2": "NIL",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 24,
+      "password": "$2b$12$9SAs2kDiQ/cUOjGqCanvF.yp3gNeNriJYiA3MkGc4LRzZqJk7FU2a",
+      "name": "Souvik Ghosh",
+      "initials": "SGH",
+      "email": "souvikghosh@hitk.in",
+      "subcode1": "MTH2102",
+      "subcode2": "NIL",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 25,
+      "password": "$2b$12$S0/KsoZIXREsF.3heASsv.uY.1xbxJahEs2ym.2YWfJ0Hd9KRGluq",
+      "name": "Debanjali Sadhu",
+      "initials": "DS",
+      "email": "debanjalisadhu@hitk.in",
+      "subcode1": "ECE2004",
+      "subcode2": "ECE2054",
+      "max_periods_per_day": 6
+    },
+    {
+      "id": 26,
+      "password": "$2b$12$nn87YZCCHzylLxx26xXEMeKX70vufCGYaLCOums4SWWmQACWjEUQ6",
+      "name": "Timir Maitra",
+      "initials": "TM",
+      "email": "timirmaitra@hitk.in",
+      "subcode1": "CSE2104",
+      "subcode2": "NIL",
+      "max_periods_per_day": 6
+    }
+  ],
+  "students": [
+    {
+      "id": "STU001",
+      "password": "$2b$12$H6MBFtuu1rGN0vumBSsJXujzfhb1sjiFGKc8ARCNZVeceWkFn6Ozu",
+      "name": "Samik Podder",
+      "roll_number": 2463056,
+      "section": "B"
+    },
+    {
+      "id": "STU002",
+      "password": "$2b$12$k2YsFWZTPG6R9CB11SGRJOezO2GK16x1aMyK3Pjl5X2PJgJCePrV6",
+      "name": "Shubham Biswas",
+      "roll_number": 2463003,
+      "section": "A"
+    },
+    {
+      "id": "STU003",
+      "password": "$2b$12$ngZgLb3B.VXEL.XnqRAtRO11Fu/2sRaMBcjbRm2swVZ82cJgWUnH.",
+      "name": "Samya Bose",
+      "roll_number": 24630220,
+      "section": "B"
+    },
+    {
+      "id": "STU004",
+      "password": "$2b$12$3THWoSZ5woy1gs0v3YG3JuE5fif.2lj.QL2p3IBhIaMQFYBKE2YCS",
+      "name": "Samya Khastagir",
+      "roll_number": 2463220,
+      "section": "A"
+    }
+  ],
+  "schedules": [
+    {
+      "id": "dcf9f976",
+      "day_id": 1,
+      "period_id": 1,
+      "subcode": "CSE2151",
+      "section": "A",
+      "fini": "SM"
+    },
+    {
+      "id": "11011bdf",
+      "day_id": 1,
+      "period_id": 2,
+      "subcode": "CSE2151",
+      "section": "A",
+      "fini": "SM"
+    },
+    {
+      "id": "f4a2c4f4",
+      "day_id": 1,
+      "period_id": 3,
+      "subcode": "CSE2151",
+      "section": "A",
+      "fini": "SM"
+    },
+    {
+      "id": "7ca608d1",
+      "day_id": 1,
+      "period_id": 5,
+      "subcode": "MTH2102",
+      "section": "A",
+      "fini": "RB"
+    },
+    {
+      "id": "c46026a0",
+      "day_id": 1,
+      "period_id": 6,
+      "subcode": "MTH2102",
+      "section": "A",
+      "fini": "RB"
+    },
+    {
+      "id": "776984c6",
+      "day_id": 1,
+      "period_id": 7,
+      "subcode": "MTH2101",
+      "section": "A",
+      "fini": "SD"
+    },
+    {
+      "id": "928afe6f",
+      "day_id": 1,
+      "period_id": 8,
+      "subcode": "CSE2102",
+      "section": "A",
+      "fini": "NB"
+    },
+    {
+      "id": "3d41cd10",
+      "day_id": 2,
+      "period_id": 1,
+      "subcode": "CSE2152",
+      "section": "A",
+      "fini": "NB"
+    },
+    {
+      "id": "2e777cea",
+      "day_id": 2,
+      "period_id": 2,
+      "subcode": "CSE2152",
+      "section": "A",
+      "fini": "NB"
+    },
+    {
+      "id": "86357b37",
+      "day_id": 2,
+      "period_id": 5,
+      "subcode": "ECE2004",
+      "section": "A",
+      "fini": "DS"
+    },
+    {
+      "id": "fbc30454",
+      "day_id": 2,
+      "period_id": 6,
+      "subcode": "ECE2004",
+      "section": "A",
+      "fini": "DS"
+    },
+    {
+      "id": "6e11e89b",
+      "day_id": 3,
+      "period_id": 1,
+      "subcode": "ECE2054",
+      "section": "A",
+      "fini": "MK"
+    },
+    {
+      "id": "1f993cf4",
+      "day_id": 3,
+      "period_id": 2,
+      "subcode": "ECE2054",
+      "section": "A",
+      "fini": "MK"
+    },
+    {
+      "id": "70d9bc19",
+      "day_id": 3,
+      "period_id": 3,
+      "subcode": "MTH2102",
+      "section": "A",
+      "fini": "RB"
+    },
+    {
+      "id": "57d1306d",
+      "day_id": 3,
+      "period_id": 5,
+      "subcode": "MTH2102",
+      "section": "A",
+      "fini": "RB"
+    },
+    {
+      "id": "bbaf304a",
+      "day_id": 3,
+      "period_id": 6,
+      "subcode": "MTH2101",
+      "section": "A",
+      "fini": "SD"
+    },
+    {
+      "id": "5b80a884",
+      "day_id": 3,
+      "period_id": 7,
+      "subcode": "CSE2102",
+      "section": "A",
+      "fini": "NB"
+    },
+    {
+      "id": "932b8c4f",
+      "day_id": 3,
+      "period_id": 8,
+      "subcode": "ECE2004",
+      "section": "A",
+      "fini": "DS"
+    },
+    {
+      "id": "f8e3bb1b",
+      "day_id": 4,
+      "period_id": 1,
+      "subcode": "CSE2101",
+      "section": "A",
+      "fini": "SM"
+    },
+    {
+      "id": "7cf0ce4f",
+      "day_id": 4,
+      "period_id": 2,
+      "subcode": "CSE2102",
+      "section": "A",
+      "fini": "NB"
+    },
+    {
+      "id": "57fb7071",
+      "day_id": 5,
+      "period_id": 1,
+      "subcode": "CSE2053",
+      "section": "A",
+      "fini": "SSN"
+    },
+    {
+      "id": "9ba54d2b",
+      "day_id": 5,
+      "period_id": 2,
+      "subcode": "CSE2053",
+      "section": "A",
+      "fini": "SSN"
+    },
+    {
+      "id": "ca4a8368",
+      "day_id": 5,
+      "period_id": 3,
+      "subcode": "CSE2101",
+      "section": "A",
+      "fini": "SM"
+    },
+    {
+      "id": "047fa0f1",
+      "day_id": 5,
+      "period_id": 5,
+      "subcode": "CSE2101",
+      "section": "A",
+      "fini": "SM"
+    },
+    {
+      "id": "46e82ddf",
+      "day_id": 5,
+      "period_id": 6,
+      "subcode": "CSE2101",
+      "section": "A",
+      "fini": "SM"
+    },
+    {
+      "id": "3c9abda9",
+      "day_id": 5,
+      "period_id": 7,
+      "subcode": "MTH2101",
+      "section": "A",
+      "fini": "SD"
+    },
+    {
+      "id": "351c6a2b",
+      "day_id": 5,
+      "period_id": 8,
+      "subcode": "MTH2101",
+      "section": "A",
+      "fini": "SD"
+    },
+    {
+      "id": "SCH1769458477325",
+      "day_id": 2,
+      "period_id": 3,
+      "subcode": "CSE2152",
+      "section": "A",
+      "fini": "NB"
+    },
+    {
+      "id": "93fa1c03",
+      "day_id": 1,
+      "period_id": 1,
+      "subcode": "CSE2151",
+      "section": "B",
+      "fini": "ART"
+    },
+    {
+      "id": "6deaf8f1",
+      "day_id": 1,
+      "period_id": 2,
+      "subcode": "CSE2151",
+      "section": "B",
+      "fini": "ART"
+    },
+    {
+      "id": "af14c0de",
+      "day_id": 1,
+      "period_id": 3,
+      "subcode": "CSE2151",
+      "section": "B",
+      "fini": "ART"
+    },
+    {
+      "id": "29e40b18",
+      "day_id": 1,
+      "period_id": 5,
+      "subcode": "CSE2053",
+      "section": "B",
+      "fini": "SS"
+    },
+    {
+      "id": "5a61bdb4",
+      "day_id": 1,
+      "period_id": 6,
+      "subcode": "CSE2053",
+      "section": "B",
+      "fini": "SS"
+    },
+    {
+      "id": "c8855135",
+      "day_id": 1,
+      "period_id": 7,
+      "subcode": "ECE2054",
+      "section": "B",
+      "fini": "MK"
+    },
+    {
+      "id": "f8303760",
+      "day_id": 1,
+      "period_id": 8,
+      "subcode": "ECE2054",
+      "section": "B",
+      "fini": "MK"
+    },
+    {
+      "id": "d1ddeb19",
+      "day_id": 2,
+      "period_id": 1,
+      "subcode": "MTH2101",
+      "section": "B",
+      "fini": "VB"
+    },
+    {
+      "id": "95941d51",
+      "day_id": 2,
+      "period_id": 2,
+      "subcode": "CSE2101",
+      "section": "B",
+      "fini": "ART"
+    },
+    {
+      "id": "05f7c435",
+      "day_id": 2,
+      "period_id": 3,
+      "subcode": "ECE2004",
+      "section": "B",
+      "fini": "MK"
+    },
+    {
+      "id": "77fafdb6",
+      "day_id": 2,
+      "period_id": 5,
+      "subcode": "CSE2102",
+      "section": "B",
+      "fini": "DB"
+    },
+    {
+      "id": "e34971ee",
+      "day_id": 2,
+      "period_id": 6,
+      "subcode": "CSE2102",
+      "section": "B",
+      "fini": "DB"
+    },
+    {
+      "id": "b376520d",
+      "day_id": 3,
+      "period_id": 1,
+      "subcode": "MTH2101",
+      "section": "B",
+      "fini": "VB"
+    },
+    {
+      "id": "29eea343",
+      "day_id": 3,
+      "period_id": 2,
+      "subcode": "MTH2101",
+      "section": "B",
+      "fini": "VB"
+    },
+    {
+      "id": "15fd4c82",
+      "day_id": 3,
+      "period_id": 3,
+      "subcode": "MTH2102",
+      "section": "B",
+      "fini": "SGH"
+    },
+    {
+      "id": "3db49682",
+      "day_id": 3,
+      "period_id": 5,
+      "subcode": "ECE2004",
+      "section": "B",
+      "fini": "MK"
+    },
+    {
+      "id": "2bb641d2",
+      "day_id": 3,
+      "period_id": 6,
+      "subcode": "CSE2102",
+      "section": "B",
+      "fini": "DB"
+    },
+    {
+      "id": "2047adeb",
+      "day_id": 4,
+      "period_id": 1,
+      "subcode": "CSE2152",
+      "section": "B",
+      "fini": "DB"
+    },
+    {
+      "id": "e86688ed",
+      "day_id": 4,
+      "period_id": 2,
+      "subcode": "CSE2152",
+      "section": "B",
+      "fini": "DB"
+    },
+    {
+      "id": "326cf959",
+      "day_id": 4,
+      "period_id": 3,
+      "subcode": "CSE2152",
+      "section": "B",
+      "fini": "DB"
+    },
+    {
+      "id": "158d7afa",
+      "day_id": 5,
+      "period_id": 1,
+      "subcode": "MTH2101",
+      "section": "B",
+      "fini": "VB"
+    },
+    {
+      "id": "d1725384",
+      "day_id": 5,
+      "period_id": 2,
+      "subcode": "CSE2101",
+      "section": "B",
+      "fini": "ART"
+    },
+    {
+      "id": "e7ae59cb",
+      "day_id": 5,
+      "period_id": 3,
+      "subcode": "CSE2101",
+      "section": "B",
+      "fini": "ART"
+    },
+    {
+      "id": "61698ae4",
+      "day_id": 5,
+      "period_id": 5,
+      "subcode": "CSE2101",
+      "section": "B",
+      "fini": "ART"
+    },
+    {
+      "id": "981bbcd1",
+      "day_id": 5,
+      "period_id": 6,
+      "subcode": "MTH2102",
+      "section": "B",
+      "fini": "SGH"
+    },
+    {
+      "id": "a31822f1",
+      "day_id": 5,
+      "period_id": 7,
+      "subcode": "MTH2102",
+      "section": "B",
+      "fini": "SGH"
+    },
+    {
+      "id": "b8e5d121",
+      "day_id": 5,
+      "period_id": 8,
+      "subcode": "MTH2102",
+      "section": "B",
+      "fini": "SGH"
+    },
+    {
+      "id": "SCH1769458811704",
+      "day_id": 4,
+      "period_id": 5,
+      "subcode": "ECE2004",
+      "section": "B",
+      "fini": "MK"
+    }
+  ]
+}
