@@ -11,7 +11,7 @@ const LandingPage = () => {
       <header className="header">
         <div className="header-container">
           <div className="logo">
-            <h1>Timetable Creator</h1>
+            <h1>📅 EduTrack</h1>
             <p>Smart Scheduling Solution</p>
           </div>
           <nav className="nav-menu">
@@ -27,7 +27,7 @@ const LandingPage = () => {
       <section className="hero" id="home">
         <div className="hero-container">
           <div className="hero-content">
-            <h1 className="hero-title">Welcome to Timetable Creator</h1>
+            <h1 className="hero-title">Welcome to Smart Timetable Creator & Attendance Management System</h1>
             <p className="hero-subtitle">
               Streamline your academic scheduling with our intelligent timetable management system. 
               Designed for students, faculty, and administrators.

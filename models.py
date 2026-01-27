@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String,Float ,ForeignKey, DateTime, Boolean, Text
 from sqlalchemy.orm import relationship
 from database import Base
+from datetime import datetime
 
 class SUBJECTS(Base):
     __tablename__ = "SUBJECTS"
@@ -47,3 +48,19 @@ class SCHEDULE(Base):
     
     subject = relationship("SUBJECTS", back_populates="timetables")
     teacher = relationship("FACULTY", back_populates="timetables")
+
+class ATTENDANCE(Base):
+    __tablename__ = "ATTENDANCE"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(String, ForeignKey("STUDENT.id"), index=True)
+    schedule_id = Column(String, ForeignKey("SCHEDULE.id"), index=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    status = Column(String, default="Present")  # Present, Absent, Late, Excused
+    qr_code_hash = Column(String, unique=True, index=True)
+    verification_method = Column(String, default="QR")  # QR, Manual, Biometric
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Relationships
+    student = relationship("STUDENT")
+    schedule = relationship("SCHEDULE")
