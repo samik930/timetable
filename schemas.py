@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
+from datetime import datetime
 
 # SUBJECTS schemas
 class SubjectsBase(BaseModel):
@@ -103,3 +104,47 @@ class ScheduleResponse(BaseModel):
 class FacultyScheduleResponse(BaseModel):
     faculty_name: str
     schedule: List[ScheduleEntry]
+
+# ATTENDANCE schemas
+class AttendanceBase(BaseModel):
+    student_id: str
+    schedule_id: str
+    status: str = "Present"
+    verification_method: str = "QR"
+
+class AttendanceCreate(AttendanceBase):
+    qr_code_hash: str
+
+class Attendance(AttendanceBase):
+    id: int
+    timestamp: datetime
+    qr_code_hash: str
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class QRCodeRequest(BaseModel):
+    schedule_id: str
+
+class QRCodeResponse(BaseModel):
+    qr_code: str
+    qr_hash: str
+    schedule_id: str
+    expires_at: datetime
+
+class AttendanceMarkRequest(BaseModel):
+    qr_hash: str
+    student_id: str
+    schedule_id: str
+
+class AttendanceResponse(BaseModel):
+    success: bool
+    message: str
+    attendance: Optional[Attendance] = None
+
+class AttendanceStatsResponse(BaseModel):
+    total_students: int
+    present_count: int
+    absent_count: int
+    attendance_percentage: float
