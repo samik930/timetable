@@ -146,6 +146,12 @@ export const adminAPI = {
     const response = await api.get(`/automated/preview/${section}`);
     return response.data;
   },
+  
+  // Clear entire timetable for a section
+  clearSectionSchedule: async (section) => {
+    const response = await api.delete(`/schedule/section/${section}`);
+    return response.data;
+  },
 };
 
 export default api;

@@ -517,6 +517,20 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleClearSectionTimetable = async () => {
+    if (!window.confirm(`Are you sure you want to delete the ENTIRE timetable for Section ${selectedSection}? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      const result = await adminAPI.clearSectionSchedule(selectedSection);
+      alert(result.message || `Timetable for Section ${selectedSection} has been cleared successfully.`);
+      fetchSchedule(); // Refresh the schedule display
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Failed to clear section timetable');
+    }
+  };
+
   const renderScheduleTimetable = () => {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const maxPeriods = 8;
@@ -551,6 +565,15 @@ const AdminDashboard = () => {
               <option value="B">Section B</option>
               <option value="C">Section C</option>
             </select>
+          </div>
+          <div className="schedule-actions">
+            <button 
+              onClick={handleClearSectionTimetable}
+              className="btn-danger"
+              title={`Delete entire timetable for Section ${selectedSection}`}
+            >
+              🗑️ Clear Entire Timetable
+            </button>
           </div>
         </div>
 
