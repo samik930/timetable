@@ -152,38 +152,6 @@ export const adminAPI = {
     const response = await api.delete(`/schedule/section/${section}`);
     return response.data;
   },
-  
-  // Attendance Management
-  generateQRCode: async (scheduleId) => {
-    const response = await api.post('/attendance/generate-qr', { schedule_id: scheduleId });
-    return response.data;
-  },
-  markAttendance: async (qrHash, studentId, scheduleId) => {
-    const response = await api.post('/attendance/mark', { 
-      qr_hash: qrHash, 
-      student_id: studentId,
-      schedule_id: scheduleId 
-    });
-    return response.data;
-  },
-  getAttendanceBySchedule: async (scheduleId) => {
-    const response = await api.get(`/attendance/schedule/${scheduleId}`);
-    return response.data;
-  },
-  getAttendanceByStudent: async (studentId) => {
-    const response = await api.get(`/attendance/student/${studentId}`);
-    return response.data;
-  },
-  getAttendanceStats: async (scheduleId) => {
-    const response = await api.get(`/attendance/stats/${scheduleId}`);
-    return response.data;
-  },
-  markManualAttendance: async (studentId, scheduleId, status = 'Present') => {
-    const response = await api.post('/attendance/manual', null, {
-      params: { student_id: studentId, schedule_id: scheduleId, status }
-    });
-    return response.data;
-  },
 };
 
 export default api;

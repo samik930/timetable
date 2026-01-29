@@ -517,21 +517,94 @@
 }
 
 /* Faculty Dashboard specific attendance button styles */
+.btn-attendance-demo {
+  background: white;
+  color: #333;
+  border: 2px solid #e0e0e0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-attendance-demo:hover {
+  background: #f8f9fa;
+  border-color: #d0d0d0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-attendance-demo:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .btn-attendance-small {
   background: linear-gradient(135deg, #17a2b8, #138496);
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 6px 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 11px;
-  transition: all 0.2s ease;
+  font-size: 0.8rem;
   font-weight: 500;
+  transition: all 0.3s ease;
   width: 100%;
 }
 
 .btn-attendance-small:hover {
   background: linear-gradient(135deg, #138496, #117a8b);
   transform: translateY(-1px);
+}
+
+/* Demo Modal Styles */
+.demo-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.demo-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  background: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.demo-modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.demo-modal-content {
+  padding: 24px;
+  background: #f8f9fa;
+}
+
+.demo-modal-content pre {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #ff6b6b;
+  margin: 0;
+  color: #333;
+  font-size: 0.95em;
+  line-height: 1.6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 

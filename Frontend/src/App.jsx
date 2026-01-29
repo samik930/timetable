@@ -4,7 +4,6 @@ import Login from './components/Login';
 import StudentDashboard from './components/StudentDashboard';
 import FacultyDashboard from './components/FacultyDashboard';
 import AdminDashboard from './components/AdminDashboard';
-import AttendanceDashboard from './components/AttendanceDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
@@ -35,14 +34,6 @@ function App() {
             element={
               <ProtectedRoute allowedUserTypes={['admin']}>
                 <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/attendance"
-            element={
-              <ProtectedRoute allowedUserTypes={['admin']}>
-                <AttendanceDashboard />
               </ProtectedRoute>
             }
           />

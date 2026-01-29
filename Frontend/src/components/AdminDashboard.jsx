@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { adminAPI } from '../services/api';
+import * as XLSX from 'xlsx';
 import AutomatedTimetableGenerator from './AutomatedTimetableGenerator';
 import './AdminDashboard.css';
 
@@ -16,10 +17,10 @@ const AdminDashboard = () => {
   const [cellFormData, setCellFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [attendanceModal, setAttendanceModal] = useState({ open: false, schedule: null, attendance: [] });
   const [showForm, setShowForm] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [formData, setFormData] = useState({});
+  const [attendanceModal, setAttendanceModal] = useState({ open: false, type: '', data: [] });
 
   useEffect(() => {
     if (activeTab !== 'schedule') {
@@ -114,7 +115,17 @@ const AdminDashboard = () => {
 
   const handleEdit = (item) => {
     setEditingItem(item);
-    setFormData({ ...item });
+    if (activeTab === 'faculty') {
+      // For faculty, mask the password with bullets of same length
+      const maskedItem = { ...item };
+      if (item.password) {
+        maskedItem.password = '•'.repeat(item.password.length);
+        maskedItem.originalPassword = item.password; // Store original for comparison
+      }
+      setFormData(maskedItem);
+    } else {
+      setFormData({ ...item });
+    }
     setShowForm(true);
   };
 
@@ -137,6 +148,103 @@ const AdminDashboard = () => {
     }
   };
 
+  const downloadStudentsExcel = () => {
+    // Prepare data for Excel
+    const excelData = students.map((student, index) => ({
+      'S.No': index + 1,
+      'Student ID': student.id,
+      'Name': student.name,
+      'Roll Number': student.roll_number,
+      'Section': student.section
+    }));
+
+    // Create workbook and worksheet
+    const ws = XLSX.utils.json_to_sheet(excelData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Students');
+
+    // Auto-size columns
+    const colWidths = [
+      { wch: 8 },  // S.No
+      { wch: 12 }, // Student ID
+      { wch: 30 }, // Name
+      { wch: 15 }, // Roll Number
+      { wch: 10 }  // Section
+    ];
+    ws['!cols'] = colWidths;
+
+    // Generate filename with timestamp
+    const timestamp = new Date().toISOString().slice(0, 10);
+    const filename = `Students_Data_${timestamp}.xlsx`;
+
+    // Download the file
+    XLSX.writeFile(wb, filename);
+  };
+
+  const generateStudentAttendanceDemo = () => {
+    // Select two random subject codes from available subjects
+    const selectedSubjects = subjects.slice(0, 2).map(s => s.code);
+    
+    // Generate demo attendance data for each student
+    const attendanceData = students.map(student => {
+      const attendance = {
+        studentId: student.id,
+        studentName: student.name,
+        rollNumber: student.roll_number,
+        section: student.section,
+        subjects: {}
+      };
+      
+      // Generate random attendance for selected subjects
+      selectedSubjects.forEach(subjectCode => {
+        const attendancePercentage = Math.floor(Math.random() * 30) + 70; // 70-100%
+        const totalClasses = Math.floor(Math.random() * 20) + 30; // 30-50 classes
+        const presentClasses = Math.floor(totalClasses * attendancePercentage / 100);
+        
+        attendance.subjects[subjectCode] = {
+          percentage: attendancePercentage,
+          totalClasses: totalClasses,
+          presentClasses: presentClasses,
+          absentClasses: totalClasses - presentClasses
+        };
+      });
+      
+      return attendance;
+    });
+    
+    setAttendanceModal({
+      open: true,
+      type: 'students',
+      data: attendanceData,
+      subjects: selectedSubjects
+    });
+  };
+
+  const generateFacultyAttendanceDemo = () => {
+    // Generate demo attendance data for each faculty member
+    const attendanceData = faculty.map(facultyMember => {
+      const overallPercentage = Math.floor(Math.random() * 15) + 85; // 85-100%
+      const totalClasses = Math.floor(Math.random() * 100) + 150; // 150-250 classes
+      const presentClasses = Math.floor(totalClasses * overallPercentage / 100);
+      
+      return {
+        facultyId: facultyMember.id,
+        facultyName: facultyMember.name,
+        initials: facultyMember.initials,
+        overallPercentage: overallPercentage,
+        totalClasses: totalClasses,
+        presentClasses: presentClasses,
+        absentClasses: totalClasses - presentClasses
+      };
+    });
+    
+    setAttendanceModal({
+      open: true,
+      type: 'faculty',
+      data: attendanceData
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -149,10 +257,17 @@ const AdminDashboard = () => {
           await adminAPI.createSubject(formData);
         }
       } else if (activeTab === 'faculty') {
+        // Handle password for faculty - if password is masked (contains bullets), use original
+        let submitData = { ...formData };
+        if (editingItem && formData.password && formData.password.includes('•')) {
+          // Password is masked, use original password
+          submitData.password = formData.originalPassword || editingItem.password;
+        }
+        
         if (editingItem) {
-          await adminAPI.updateFaculty(editingItem.id, formData);
+          await adminAPI.updateFaculty(editingItem.id, submitData);
         } else {
-          await adminAPI.createFaculty(formData);
+          await adminAPI.createFaculty(submitData);
         }
       } else if (activeTab === 'students') {
         if (editingItem) {
@@ -320,11 +435,17 @@ const AdminDashboard = () => {
           <div className="form-group">
             <label>Password *</label>
             <input
-              type="text"
+              type="password"
               value={formData.password || ''}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              required
+              required={!editingItem}
+              placeholder={editingItem ? "Leave unchanged to keep current password" : "Enter password"}
             />
+            {editingItem && (
+              <small style={{ color: '#666', display: 'block', marginTop: '5px' }}>
+                Current password is masked. Enter new password only if you want to change it.
+              </small>
+            )}
           </div>
           <div className="form-group">
             <label>Name *</label>
@@ -532,53 +653,6 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleViewAttendance = async (scheduleEntry) => {
-    try {
-      setLoading(true);
-      const response = await adminAPI.getAttendanceBySchedule(scheduleEntry.id);
-      
-      // Get student details for attendance records
-      const attendanceWithStudents = await Promise.all(
-        response.map(async (record) => {
-          try {
-            const studentResponse = await adminAPI.getStudents();
-            const student = studentResponse.find(s => s.id === record.student_id);
-            return {
-              ...record,
-              student_name: student ? student.name : 'Unknown',
-              roll_number: student ? student.roll_number : 'N/A'
-            };
-          } catch (err) {
-            return {
-              ...record,
-              student_name: 'Unknown',
-              roll_number: 'N/A'
-            };
-          }
-        })
-      );
-      
-      setAttendanceModal({
-        open: true,
-        schedule: scheduleEntry,
-        attendance: attendanceWithStudents
-      });
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to fetch attendance');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Present': return '#4CAF50';
-      case 'Late': return '#FF9800';
-      case 'Absent': return '#F44336';
-      default: return '#666';
-    }
-  };
-
   const renderScheduleTimetable = () => {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const maxPeriods = 8;
@@ -741,38 +815,6 @@ const AdminDashboard = () => {
                             <div className="subject-name">{entry.subject_name}</div>
                             <div className="subject-code">{entry.subcode}</div>
                             <div className="teacher-name">{entry.teacher_name}</div>
-                            <div className="entry-actions">
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleCellClick(dayIndex + 1, periodIndex + 1);
-                                }} 
-                                className="btn-edit-small"
-                                title="Edit"
-                              >
-                                ✏️
-                              </button>
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleViewAttendance(entry);
-                                }} 
-                                className="btn-attendance-small"
-                                title="View Attendance"
-                              >
-                                👥
-                              </button>
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleCellDelete(entry.id);
-                                }} 
-                                className="btn-delete-small"
-                                title="Delete"
-                              >
-                                🗑️
-                              </button>
-                            </div>
                           </div>
                         ) : (
                           <div className="empty-cell">Click to add</div>
@@ -851,7 +893,24 @@ const AdminDashboard = () => {
                   <h2>
                     {activeTab === 'subjects' ? 'Subjects' : activeTab === 'faculty' ? 'Faculty' : 'Students'}
                   </h2>
-                  <button onClick={handleAdd} className="btn-add">+ Add New</button>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    {activeTab === 'students' && students.length > 0 && (
+                      <>
+                        <button onClick={downloadStudentsExcel} className="btn-excel" title="Download Students Excel">
+                          📊 Download Excel
+                        </button>
+                        <button onClick={generateStudentAttendanceDemo} className="btn-attendance-demo" title="View Student Attendance Demo">
+                          📈 Attendance Demo
+                        </button>
+                      </>
+                    )}
+                    {activeTab === 'faculty' && faculty.length > 0 && (
+                      <button onClick={generateFacultyAttendanceDemo} className="btn-attendance-demo" title="View Faculty Attendance Demo">
+                        📈 Faculty Attendance Demo
+                      </button>
+                    )}
+                    <button onClick={handleAdd} className="btn-add">+ Add New</button>
+                  </div>
                 </div>
               )}
 
@@ -896,69 +955,101 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Attendance Modal */}
+      {/* Attendance Demo Modal */}
       {attendanceModal.open && (
         <div className="modal-overlay">
-          <div className="attendance-modal">
-            <div className="attendance-modal-header">
-              <h3>👥 Class Attendance</h3>
-              <button onClick={() => setAttendanceModal({ open: false, schedule: null, attendance: [] })} className="btn-close">
+          <div className="attendance-demo-modal">
+            <div className="attendance-demo-header">
+              <h3>
+                {attendanceModal.type === 'students' ? '📈 Student Attendance Demo' : '📈 Faculty Attendance Demo'}
+              </h3>
+              <button onClick={() => setAttendanceModal({ open: false, type: '', data: [] })} className="btn-close">
                 ✕
               </button>
             </div>
-            <div className="attendance-modal-content">
-              {attendanceModal.schedule && (
-                <div className="class-info">
-                  <p><strong>Subject:</strong> {attendanceModal.schedule.subject_name}</p>
-                  <p><strong>Code:</strong> {attendanceModal.schedule.subcode}</p>
-                  <p><strong>Teacher:</strong> {attendanceModal.schedule.teacher_name}</p>
-                  <p><strong>Section:</strong> {attendanceModal.schedule.section}</p>
-                  <p><strong>Day:</strong> {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'][attendanceModal.schedule.day_id - 1]}</p>
-                  <p><strong>Period:</strong> {attendanceModal.schedule.period_id}</p>
-                  <p><strong>Total Attended:</strong> {attendanceModal.attendance.length} students</p>
+            <div className="attendance-demo-content">
+              {attendanceModal.type === 'students' ? (
+                <div>
+                  <div className="demo-info">
+                    <p><strong>Subject Codes:</strong> {attendanceModal.subjects?.join(', ')}</p>
+                    <p><strong>Total Students:</strong> {attendanceModal.data.length}</p>
+                  </div>
+                  <div className="attendance-table-container">
+                    <table className="attendance-demo-table">
+                      <thead>
+                        <tr>
+                          <th>Roll No</th>
+                          <th>Student Name</th>
+                          <th>Section</th>
+                          {attendanceModal.subjects?.map(subject => (
+                            <th key={subject}>{subject} (%)</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {attendanceModal.data.map((student, index) => (
+                          <tr key={index}>
+                            <td>{student.rollNumber}</td>
+                            <td>{student.studentName}</td>
+                            <td>{student.section}</td>
+                            {attendanceModal.subjects?.map(subject => {
+                              const subjectData = student.subjects[subject];
+                              return (
+                                <td key={subject}>
+                                  <div className="attendance-cell">
+                                    <span className={`attendance-percentage ${subjectData.percentage >= 75 ? 'good' : subjectData.percentage >= 60 ? 'average' : 'poor'}`}>
+                                      {subjectData.percentage}%
+                                    </span>
+                                    <div className="attendance-details">
+                                      {subjectData.presentClasses}/{subjectData.totalClasses}
+                                    </div>
+                                  </div>
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="demo-info">
+                    <p><strong>Total Faculty:</strong> {attendanceModal.data.length}</p>
+                  </div>
+                  <div className="attendance-table-container">
+                    <table className="attendance-demo-table">
+                      <thead>
+                        <tr>
+                          <th>Faculty Name</th>
+                          <th>Initials</th>
+                          <th>Overall Attendance (%)</th>
+                          <th>Classes Present/Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {attendanceModal.data.map((faculty, index) => (
+                          <tr key={index}>
+                            <td>{faculty.facultyName}</td>
+                            <td>{faculty.initials}</td>
+                            <td>
+                              <span className={`attendance-percentage ${faculty.overallPercentage >= 90 ? 'excellent' : faculty.overallPercentage >= 80 ? 'good' : 'average'}`}>
+                                {faculty.overallPercentage}%
+                              </span>
+                            </td>
+                            <td>
+                              <div className="attendance-details">
+                                {faculty.presentClasses}/{faculty.totalClasses}
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
-              
-              <div className="attendance-list">
-                {attendanceModal.attendance.length === 0 ? (
-                  <div className="no-attendance">
-                    <p>📝 No students have marked attendance for this class yet</p>
-                  </div>
-                ) : (
-                  <table className="attendance-table">
-                    <thead>
-                      <tr>
-                        <th>Student Name</th>
-                        <th>Roll Number</th>
-                        <th>Status</th>
-                        <th>Time</th>
-                        <th>Method</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {attendanceModal.attendance.map((record) => (
-                        <tr key={record.id}>
-                          <td>{record.student_name}</td>
-                          <td>{record.roll_number}</td>
-                          <td>
-                            <span 
-                              className="status-badge"
-                              style={{ backgroundColor: getStatusColor(record.status) }}
-                            >
-                              {record.status}
-                            </span>
-                          </td>
-                          <td>{new Date(record.marked_at).toLocaleTimeString('en-US', { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
-                          })}</td>
-                          <td>{record.verification_method}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
-              </div>
             </div>
           </div>
         </div>

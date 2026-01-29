@@ -66,7 +66,7 @@ const Login = () => {
         <button onClick={handleBackToLanding} className="back-button">
           ← Back to Home
         </button>
-        <h1>Timetable Creator & Attendance Management System</h1>
+        <h1>IsSmart</h1>
         <h2>{userType.charAt(0).toUpperCase() + userType.slice(1)} Login</h2>
         
         <div className="user-type-selector">

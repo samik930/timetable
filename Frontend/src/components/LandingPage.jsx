@@ -11,7 +11,7 @@ const LandingPage = () => {
       <header className="header">
         <div className="header-container">
           <div className="logo">
-            <h1>📅 EduTrack</h1>
+<h1>IsSmart</h1>
             <p>Smart Scheduling Solution</p>
           </div>
           <nav className="nav-menu">
@@ -27,7 +27,7 @@ const LandingPage = () => {
       <section className="hero" id="home">
         <div className="hero-container">
           <div className="hero-content">
-            <h1 className="hero-title">Welcome to Smart Timetable Creator & Attendance Management System</h1>
+<h1 className="hero-title">Welcome to IsSmart</h1>
             <p className="hero-subtitle">
               Streamline your academic scheduling with our intelligent timetable management system. 
               Designed for students, faculty, and administrators.
@@ -101,11 +101,11 @@ const LandingPage = () => {
       {/* About Section */}
       <section className="about" id="about">
         <div className="about-container">
-          <h2 className="section-title">About Timetable Creator</h2>
+          <h2 className="section-title">About IsSmart</h2>
           <div className="about-content">
             <div className="about-text">
               <p>
-                Timetable Creator is a comprehensive scheduling solution designed to simplify 
+                IsSmart is a comprehensive scheduling solution designed to simplify 
                 academic timetable management for educational institutions. Our platform brings 
                 together students, faculty, and administrators in a unified system that makes 
                 scheduling efficient, transparent, and conflict-free.
@@ -138,7 +138,7 @@ const LandingPage = () => {
         <div className="footer-container">
           <div className="footer-content">
             <div className="footer-section">
-              <h3>Timetable Creator</h3>
+              <h3>IsSmart</h3>
               <p>Smart Scheduling Solution for Modern Education</p>
               <div className="social-links">
                 <a href="#" className="social-link">📧</a>
@@ -168,14 +168,13 @@ const LandingPage = () => {
             <div className="footer-section">
               <h4>Contact Us</h4>
               <div className="contact-info">
-                <p>📧 support@timetablecreator.com</p>
-                <p>📞 +1 (555) 123-4567</p>
-                <p>📍 123 Education Street, Learning City, LC 12345</p>
+                <p>📞 +91 7439471155</p>
+                <p>📧 <a href="mailto:shubham.biswas.cse27@heritageit.edu.in" style={{ color: 'inherit', textDecoration: 'none' }}>shubham.biswas.cse27@heritageit.edu.in</a></p>
               </div>
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 Timetable Creator. All rights reserved.</p>
+            <p>&copy; 2024 IsSmart. All rights reserved.</p>
           </div>
         </div>
       </footer>
